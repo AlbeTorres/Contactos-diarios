@@ -15,7 +15,7 @@ import com.example.eureka.contactosdiarios.Pojo.Contacto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity   {
 
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -50,19 +50,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         contactoList.add(new Contacto("Manolo","55667788"));
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setEnabled(false);
-        setMenuItemColor(menuItem);
-        return true;
-    }
+
+
 
 }
