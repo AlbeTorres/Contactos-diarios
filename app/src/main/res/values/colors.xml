@@ -3,6 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="gris">#cfcdce</color>
-    <color name="grisoscuro">#949293</color>
+    <color name="gris">#f1edef</color>
+    <color name="grisoscuro">#dad9d9</color>
+    <color name="sombra">#4e4c4d</color>
+    <color name="blanco">#f9f9f9</color>
+
 </resources>

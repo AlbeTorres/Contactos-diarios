@@ -9,15 +9,16 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="67dp"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
         android:layout_margin="0dp"
         android:padding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintHorizontal_bias="0.078"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.512"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
     <TextView
@@ -27,7 +28,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="TextView"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.053"
@@ -63,7 +64,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginStart="8dp"
         android:text="TextView"
-        android:textSize="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
