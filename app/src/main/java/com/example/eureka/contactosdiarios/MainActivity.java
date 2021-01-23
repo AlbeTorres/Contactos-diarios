@@ -1,12 +1,15 @@
 package com.example.eureka.contactosdiarios;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.eureka.contactosdiarios.Fragment.Imagen;
 import com.example.eureka.contactosdiarios.Pojo.Contacto;
@@ -22,6 +25,11 @@ public class MainActivity extends AppCompatActivity   {
     RecyclerView recyclerView;
     List<Contacto> contactoList = new ArrayList<>();
     ContactoAdapter adapter;
+    Button añadir;
+    Button contacto;
+    Toast toast;
+    Intent intent;
+    Intent intent2;
 
 
     @Override
@@ -30,6 +38,29 @@ public class MainActivity extends AppCompatActivity   {
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        añadir = (Button) findViewById(R.id.aña);
+
+        contacto = (Button) findViewById(R.id.cont);
+
+        intent = new Intent(this,Main2Activity.class);
+        intent2 = new Intent(this,Main3Activity.class);
+
+
+        contacto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent2);
+            }
+        });
+
+        añadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+
+            }
+        });
 
         Cargardatos();
         if (contactoList.isEmpty()){
