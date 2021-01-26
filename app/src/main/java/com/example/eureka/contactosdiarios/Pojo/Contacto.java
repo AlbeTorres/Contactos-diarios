@@ -8,13 +8,24 @@ public class Contacto {
 
     private String nombre;
     private String telefono;
+    private String dia;
+    private String mes;
+    private String año;
 
-    public Contacto( String nombre, String telefono){
+    public Contacto( String nombre, String telefono, String dia, String mes, String año){
         this.nombre= nombre;
         this.telefono= telefono;
+        this.dia=dia;
+        this.mes= mes;
+        this.año= año;
     }
-    public Contacto( String nombre){
+
+    public Contacto( String nombre, String dia, String mes, String año){
+
         this.nombre= nombre;
+        this.dia=dia;
+        this.mes= mes;
+        this.año= año;
     }
 
 
