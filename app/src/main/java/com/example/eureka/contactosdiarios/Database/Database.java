@@ -25,9 +25,9 @@ public class Database extends SQLiteOpenHelper {
                 Constants.ID_CONTACTO        + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Constants.NOMBRE    + " TEXT, " +
                 Constants.TELEFONO + " TEXT, " +
-                Constants.DIA + " TEXT, " +
-                Constants.MES      + " TEXT" +
-                Constants.AÑO      + " TEXT" +
+                Constants.DIA + " INTEGER, " +
+                Constants.MES      + " INTEGER, " +
+                Constants.AÑO      + " INTEGER" +
                 ")";
 
         db.execSQL(queryCrearTablaContacto);

@@ -84,8 +84,7 @@ public class Main3Activity extends AppCompatActivity {
         dias.add("6");
         dias.add("7");
 
-        contactoList.add(new Contacto("Manolo","55667788","1","4","2020"));
-        contactoList.add(new Contacto("Manolo","55667788","1","4","2020"));
-        contactoList.add(new Contacto("Manolo","55667788","1","4","2020"));
+        contactoList.add(new Contacto(1,"Manolo","55667788",1,4,2020));
+
     }
 }

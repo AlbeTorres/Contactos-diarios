@@ -1,6 +1,9 @@
 package com.example.eureka.contactosdiarios;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,10 @@ import android.text.format.Time;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.eureka.contactosdiarios.Database.Acceso;
+import com.example.eureka.contactosdiarios.Database.Constants;
+import com.example.eureka.contactosdiarios.Database.Database;
 import com.example.eureka.contactosdiarios.Fragment.Imagen;
 import com.example.eureka.contactosdiarios.Pojo.Contacto;
 import java.util.ArrayList;
@@ -34,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     int dia;
     int mes;
     int año;
-
+    Acceso acceso;
+    Database db= new Database(this);
 
 
 
@@ -47,10 +55,13 @@ public class MainActivity extends AppCompatActivity {
             nombre= data.getStringExtra("nombre");
             telefono= data.getStringExtra("tele");
 
-            contactoList.add(new Contacto(nombre,telefono,"1","4","2020"));
+            Contacto contacto= new Contacto(1,nombre,telefono,dia,mes,año);
 
+            long result =InsertarDatos(contacto);
 
-            Toast.makeText(MainActivity.this,"dia :"+ dia+ " mes :" + mes+ " año :" + año,Toast.LENGTH_LONG).show();
+            CargarDatos(dia);
+
+            Toast.makeText(MainActivity.this,""+ result,Toast.LENGTH_LONG).show();
 
             recyclerView.setAdapter(adapter);
 
@@ -70,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         añadir = (Button) findViewById(R.id.aña);
         contacto = (Button) findViewById(R.id.cont);
 
@@ -83,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
         Time today = new Time(Time.getCurrentTimezone());
         today.setToNow();
             dia = today.monthDay;
-            mes = today.month;
+            mes = (today.month) +1;
             año = today.year;
-            mes= mes+1;
 
 
+        CargarDatos(dia);
 
         if (contactoList.isEmpty()){
 
@@ -125,16 +138,64 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void Cargardatos(){
+    public void CargarDatos(Integer diase){
 
-        contactoList.add(new Contacto("Manolo","55667788","1","4","2020"));
-        contactoList.add(new Contacto("Manolo","55667788","1","4","2020"));
-        contactoList.add(new Contacto("Manolo","55667788","1","4","2020"));
+
+
+        SQLiteDatabase database = db.getReadableDatabase();
+
+        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO + " WHERE " + Constants.DIA + "=" + diase,null);
+
+        if( cur.moveToFirst()){
+
+            /*cur != null*/
+
+            do{
+
+                contactoList.add(new Contacto(         cur.getInt(0),cur.getString(1),
+                                                    cur.getString(2),cur.getInt(3),
+                                                    cur.getInt(4),cur.getInt(5)
+                                              ));
+            } while(cur.moveToNext());
+
+
+        }
+
+
 
     }
 
 
+    public long InsertarDatos(Contacto contacto){
+
+        SQLiteDatabase database = db.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(Constants.NOMBRE,contacto.getNombre());
+        contentValues.put(Constants.TELEFONO,contacto.getTelefono());
+        contentValues.put(Constants.DIA,contacto.getDia());
+        contentValues.put(Constants.MES,contacto.getMes());
+        contentValues.put(Constants.AÑO,contacto.getAño());
+
+        long resul= database.insert(Constants.TABLE_CONTACTO,null,contentValues);
+
+        database.close();
+
+        return resul;
+    }
 
 
+    public List<Contacto> Car(){
 
+        List<Contacto> con = new ArrayList<>();
+
+        con.add(new Contacto(1,"ee","rr",1,1,1));
+        con.add(new Contacto(1,"ee","rr",1,1,1));
+        con.add(new Contacto(1,"ee","rr",1,1,1));
+        con.add(new Contacto(1,"ee","rr",1,1,1));
+
+        return con;
+
+    }
 }

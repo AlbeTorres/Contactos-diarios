@@ -25,13 +25,13 @@ public class Acceso {
        this.context = context;
    }
 
-    Database db= new Database(context);
+
 
 
     public List<Contacto> CargarDatos(){
 
         List<Contacto> contactolist = new ArrayList<>();
-
+        Database db= new Database(context);
 
         SQLiteDatabase database = db.getReadableDatabase();
 
@@ -44,8 +44,8 @@ public class Acceso {
             do{
 
                 contactolist.add(new Contacto(  cur.getInt(0),cur.getString(1),
-                                                cur.getString(2),cur.getString(3),
-                                                cur.getString(4),cur.getString(5)
+                                                cur.getString(2),cur.getInt(3),
+                                                cur.getInt(4),cur.getInt(5)
                                                 ));
             } while(cur.moveToNext());
 
@@ -60,7 +60,7 @@ public class Acceso {
 
     public long InsertarDatos(Contacto contacto){
 
-
+        Database db= new Database(context);
         SQLiteDatabase database = db.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -81,7 +81,7 @@ public class Acceso {
 
     public long ModificarDatos(Contacto contacto, Integer id){
 
-
+        Database db= new Database(context);
         SQLiteDatabase database = db.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -98,6 +98,7 @@ public class Acceso {
     }
 
     public long EliminarDatos(Integer id){
+        Database db= new Database(context);
         SQLiteDatabase database = db.getWritableDatabase();
 
         long result = database.delete(Constants.TABLE_CONTACTO , Constants.ID_CONTACTO + "=" + id,null);
@@ -108,16 +109,16 @@ public class Acceso {
     public Contacto ConsultarContacto(Integer id){
 
         Contacto contacto;
-
+        Database db= new Database(context);
         SQLiteDatabase database = db.getReadableDatabase();
 
         Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO + " WHERE " + Constants.ID_CONTACTO + "=" + id,null);
 
         cur.moveToFirst();
 
-        contacto = new Contacto(    cur.getInt(0),cur.getString(1),
-                                    cur.getString(2),cur.getString(3),
-                                    cur.getString(4),cur.getString(5)
+        contacto = new Contacto(         cur.getInt(0),cur.getString(1),
+                                         cur.getString(2),cur.getInt(3),
+                                         cur.getInt(4),cur.getInt(5)
                                 );
 
         return contacto;

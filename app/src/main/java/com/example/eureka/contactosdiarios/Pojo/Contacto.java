@@ -9,11 +9,11 @@ public class Contacto {
     Integer id;
     private String nombre;
     private String telefono;
-    private String dia;
-    private String mes;
-    private String año;
+    private Integer dia;
+    private Integer mes;
+    private Integer año;
 
-    public Contacto( Integer id, String nombre, String telefono, String dia, String mes, String año){
+    public Contacto( Integer id, String nombre, String telefono, Integer dia, Integer mes, Integer año){
         this.id= id;
         this.nombre= nombre;
         this.telefono= telefono;
@@ -22,7 +22,7 @@ public class Contacto {
         this.año= año;
     }
 
-    public Contacto( String nombre, String dia, String mes, String año){
+    public Contacto( String nombre, Integer dia, Integer mes, Integer año){
 
         this.nombre= nombre;
         this.dia=dia;
@@ -55,27 +55,27 @@ public class Contacto {
         this.id = id;
     }
 
-    public String getDia() {
+    public Integer getDia() {
         return dia;
     }
 
-    public void setDia(String dia) {
+    public void setDia(Integer dia) {
         this.dia = dia;
     }
 
-    public String getMes() {
+    public Integer getMes() {
         return mes;
     }
 
-    public void setMes(String mes) {
+    public void setMes(Integer mes) {
         this.mes = mes;
     }
 
-    public String getAño() {
+    public Integer getAño() {
         return año;
     }
 
-    public void setAño(String año) {
+    public void setAño(Integer año) {
         this.año = año;
     }
 }
