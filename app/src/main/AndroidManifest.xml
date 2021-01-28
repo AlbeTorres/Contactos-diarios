@@ -33,6 +33,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Main4Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAINACTIVITY4ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+
+        </activity>
     </application>
 
 </manifest>

@@ -21,21 +21,19 @@ public class Acceso {
     private Context context;
 
 
+
    public Acceso(Context context){
        this.context = context;
+
    }
 
+    public void CargarDatos(Integer diase, List<Contacto> contactos){
 
-
-
-    public List<Contacto> CargarDatos(){
-
-        List<Contacto> contactolist = new ArrayList<>();
         Database db= new Database(context);
 
         SQLiteDatabase database = db.getReadableDatabase();
 
-        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO,null);
+        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO + " WHERE " + Constants.DIA + "=" + diase,null);
 
         if( cur.moveToFirst()){
 
@@ -43,10 +41,10 @@ public class Acceso {
 
             do{
 
-                contactolist.add(new Contacto(  cur.getInt(0),cur.getString(1),
-                                                cur.getString(2),cur.getInt(3),
-                                                cur.getInt(4),cur.getInt(5)
-                                                ));
+                contactos.add(new Contacto(         cur.getInt(0),cur.getString(1),
+                                                    cur.getString(2),cur.getInt(3),
+                                                    cur.getInt(4),cur.getInt(5)
+                ));
             } while(cur.moveToNext());
 
 
@@ -54,9 +52,7 @@ public class Acceso {
 
 
 
-        return contactolist;
-
-        }
+    }
 
     public long InsertarDatos(Contacto contacto){
 

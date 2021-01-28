@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     int mes;
     int año;
     Acceso acceso;
-    Database db= new Database(this);
+
 
 
 
@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
             Contacto contacto= new Contacto(1,nombre,telefono,dia,mes,año);
 
-            long result =InsertarDatos(contacto);
+            long result =acceso.InsertarDatos(contacto);
 
-            CargarDatos(dia);
+            acceso.CargarDatos(dia,contactoList);
 
             Toast.makeText(MainActivity.this,""+ result,Toast.LENGTH_LONG).show();
 
@@ -99,8 +99,10 @@ public class MainActivity extends AppCompatActivity {
             mes = (today.month) +1;
             año = today.year;
 
+            acceso= new Acceso(this);
 
-        CargarDatos(dia);
+
+        acceso.CargarDatos(dia,contactoList);
 
         if (contactoList.isEmpty()){
 
@@ -114,10 +116,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
         intent = new Intent(this,Main2Activity.class);
         intent2 = new Intent(this,Main3Activity.class);
+        intent2.putExtra("dia",dia);
+        intent2.putExtra("mes",mes);
+        intent2.putExtra("año",año);
 
 
         contacto.setOnClickListener(new View.OnClickListener() {
@@ -135,67 +138,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
-    public void CargarDatos(Integer diase){
-
-
-
-        SQLiteDatabase database = db.getReadableDatabase();
-
-        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO + " WHERE " + Constants.DIA + "=" + diase,null);
-
-        if( cur.moveToFirst()){
-
-            /*cur != null*/
-
-            do{
-
-                contactoList.add(new Contacto(         cur.getInt(0),cur.getString(1),
-                                                    cur.getString(2),cur.getInt(3),
-                                                    cur.getInt(4),cur.getInt(5)
-                                              ));
-            } while(cur.moveToNext());
-
-
-        }
-
-
-
     }
 
-
-    public long InsertarDatos(Contacto contacto){
-
-        SQLiteDatabase database = db.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(Constants.NOMBRE,contacto.getNombre());
-        contentValues.put(Constants.TELEFONO,contacto.getTelefono());
-        contentValues.put(Constants.DIA,contacto.getDia());
-        contentValues.put(Constants.MES,contacto.getMes());
-        contentValues.put(Constants.AÑO,contacto.getAño());
-
-        long resul= database.insert(Constants.TABLE_CONTACTO,null,contentValues);
-
-        database.close();
-
-        return resul;
-    }
-
-
-    public List<Contacto> Car(){
-
-        List<Contacto> con = new ArrayList<>();
-
-        con.add(new Contacto(1,"ee","rr",1,1,1));
-        con.add(new Contacto(1,"ee","rr",1,1,1));
-        con.add(new Contacto(1,"ee","rr",1,1,1));
-        con.add(new Contacto(1,"ee","rr",1,1,1));
-
-        return con;
-
-    }
-}

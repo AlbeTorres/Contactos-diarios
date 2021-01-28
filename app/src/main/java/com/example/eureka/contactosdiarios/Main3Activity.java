@@ -1,13 +1,16 @@
 package com.example.eureka.contactosdiarios;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,6 +28,28 @@ public class Main3Activity extends AppCompatActivity {
     RecyclerView recyclerView;
     ContactoAdapter adapter;
     List<Contacto> contactoList = new ArrayList<>();
+    Toolbar toolbar3;
+    int dia ;
+    int mes;
+    int año;
+    Button sele;
+    Intent intent3;
+    int inputcode= 17;
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK){
+
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(fragment)
+                    .commit();
+
+        } }
 
 
 
@@ -32,15 +57,21 @@ public class Main3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        toolbar3 = (Toolbar) findViewById(R.id.toolbar3);
+        toolbar3.setTitle("Últimos contactos");
+        setSupportActionBar(toolbar3);
+
+        sele = (Button)findViewById(R.id.sele);
+        intent3 = new Intent(this,Main4Activity.class);
 
         fragment = new BlankFragment();
 
-        Caragardatos();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.framecontac,fragment)
+                .commit();
 
-        spinner = (Spinner) findViewById(R.id.spinner2);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,dias);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
+
 
         recyclerView= (RecyclerView) findViewById(R.id.recyclerView2);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -49,42 +80,23 @@ public class Main3Activity extends AppCompatActivity {
         adapter = new ContactoAdapter(this,contactoList);
         recyclerView.setAdapter(adapter);
 
+        Bundle bundle = getIntent().getExtras();
+         dia = bundle.getInt("dia");
+         mes= bundle.getInt("mes");
+         año= bundle.getInt("año");
 
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        sele.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               Toast.makeText(Main3Activity.this,String.valueOf(spinner.getSelectedItem()),Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.framecontac,fragment)
-                        .commit();
+            public void onClick(View v) {
+                startActivityForResult(intent3,inputcode);
             }
         });
 
 
 
 
-
-
     }
 
-    public  void Caragardatos(){
-
-        dias.add("1");
-        dias.add("2");
-        dias.add("3");
-        dias.add("4");
-        dias.add("5");
-        dias.add("6");
-        dias.add("7");
-
-        contactoList.add(new Contacto(1,"Manolo","55667788",1,4,2020));
-
-    }
 }

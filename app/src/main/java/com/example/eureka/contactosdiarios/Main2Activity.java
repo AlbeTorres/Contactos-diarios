@@ -31,8 +31,11 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
+
+        Toolbar toolbar2 = (Toolbar) findViewById(R.id.toolbar2);
+        toolbar2.setTitle("Añadir contacto");
+        setSupportActionBar(toolbar2);
+
 
         nombre= (TextView) findViewById(R.id.textViewnombre);
         telefono= (TextView) findViewById(R.id.textView2);
