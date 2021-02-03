@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.eureka.contactosdiarios.Database.Acceso;
 import com.example.eureka.contactosdiarios.Fragment.BlankFragment;
 import com.example.eureka.contactosdiarios.Pojo.Contacto;
 
@@ -28,13 +29,18 @@ public class Main3Activity extends AppCompatActivity {
     RecyclerView recyclerView;
     ContactoAdapter adapter;
     List<Contacto> contactoList = new ArrayList<>();
+    List<Contacto> contactoListado = new ArrayList<>();
     Toolbar toolbar3;
     int dia ;
     int mes;
     int año;
+    int diapi;
+    int mespi;
+    int añopi;
     Button sele;
     Intent intent3;
     int inputcode= 17;
+    Acceso acceso;
 
 
     @Override
@@ -42,6 +48,38 @@ public class Main3Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode==RESULT_OK){
+
+          diapi= data.getIntExtra("diapi",1);
+          mespi= data.getIntExtra("mespi",1);
+          añopi= data.getIntExtra("añopi",1);
+
+            acceso.CargarDatosentre(contactoListado);
+            contactoList.clear();
+
+            for (int i= 0;i< contactoListado.size();i++){
+                int auxdia= contactoListado.get(i).getDia();
+                int auxmes= contactoListado.get(i).getMes();
+                int auxaño= contactoListado.get(i).getAño();
+
+                if (    (( auxdia <= dia && auxdia >= diapi )&&( auxmes<= mes && auxmes >= mespi )&&( auxaño<= año && auxaño >= añopi ))||
+                        (( auxdia < dia && auxdia < diapi )&&( auxmes<= mes && auxmes > mespi )&&( auxaño<= año && auxaño >= añopi ))||
+                        (( auxdia > dia && auxdia >= diapi )&&( auxmes< mes && auxmes >= mespi )&&( auxaño<= año && auxaño >= añopi ))||
+                        (( auxdia == dia  )&&( auxmes== mes && auxmes >= mespi )&&( auxaño<= año && auxaño >= añopi ))||
+                        (( auxdia >= dia && auxdia >= diapi )&&( auxmes>= mes && auxmes >= mespi )&&( auxaño< año && auxaño >= añopi ))
+
+                        ){
+
+                    contactoList.add(contactoListado.get(i));
+
+                }
+
+
+            }
+
+            recyclerView.setAdapter(adapter);
+
+
+            Toast.makeText(this,dia+" "+ mes+" " + " "+año+ "  ESO "+ diapi+" "+mespi+" "+añopi,Toast.LENGTH_LONG).show();
 
 
             getSupportFragmentManager()
@@ -63,7 +101,7 @@ public class Main3Activity extends AppCompatActivity {
 
         sele = (Button)findViewById(R.id.sele);
         intent3 = new Intent(this,Main4Activity.class);
-
+        acceso= new Acceso(this);
         fragment = new BlankFragment();
 
         getSupportFragmentManager()
@@ -78,7 +116,7 @@ public class Main3Activity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ContactoAdapter(this,contactoList);
-        recyclerView.setAdapter(adapter);
+
 
         Bundle bundle = getIntent().getExtras();
          dia = bundle.getInt("dia");

@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.format.Time;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -38,13 +41,11 @@ public class MainActivity extends AppCompatActivity {
     Intent intent2;
     String nombre, telefono;
     int inputcode= 17;
+    int inputcode2=18;
     int dia;
     int mes;
     int año;
     Acceso acceso;
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
             long result =acceso.InsertarDatos(contacto);
 
-            acceso.CargarDatos(dia,contactoList);
+            acceso.CargarDatos(dia,mes,año,contactoList);
 
             Toast.makeText(MainActivity.this,""+ result,Toast.LENGTH_LONG).show();
 
@@ -81,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         añadir = (Button) findViewById(R.id.aña);
         contacto = (Button) findViewById(R.id.cont);
 
@@ -91,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ContactoAdapter(this,contactoList);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
         Time today = new Time(Time.getCurrentTimezone());
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             acceso= new Acceso(this);
 
 
-        acceso.CargarDatos(dia,contactoList);
+        acceso.CargarDatos(dia,mes,año,contactoList);
 
         if (contactoList.isEmpty()){
 
@@ -138,5 +140,52 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+                    acceso.EliminarDatos(contactoList.get(position).getId());
+                    contactoList.remove(position);
+                    adapter.notifyItemRemoved(position);
+
+                    break;
+                case ItemTouchHelper.RIGHT:
+                    Intent intent3 = new Intent(MainActivity.this,Main5Activity.class);
+                    startActivityForResult(intent3,inputcode2);
+                    break;
+
+            }
+
+        }
+    };
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_dir,menu);
+        return true;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.sobre_nosotros:
+
+            default:
+                return super.onOptionsItemSelected(item);
+    }
+
+    }
+}
 

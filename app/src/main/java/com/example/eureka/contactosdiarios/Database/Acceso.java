@@ -27,13 +27,17 @@ public class Acceso {
 
    }
 
-    public void CargarDatos(Integer diase, List<Contacto> contactos){
+    public void CargarDatos(Integer diase,Integer mease,Integer añoase, List<Contacto> contactos){
+
+       contactos.clear();
 
         Database db= new Database(context);
 
         SQLiteDatabase database = db.getReadableDatabase();
 
-        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO + " WHERE " + Constants.DIA + "=" + diase,null);
+        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO + " WHERE " + Constants.DIA + "=" + diase+" and "+
+                                                                                                    Constants.MES + "=" +mease+" and "+
+                                                                                                    Constants.AÑO +"=" +añoase,null);
 
         if( cur.moveToFirst()){
 
@@ -50,9 +54,7 @@ public class Acceso {
 
         }
 
-
-
-    }
+   }
 
     public long InsertarDatos(Contacto contacto){
 
@@ -118,6 +120,33 @@ public class Acceso {
                                 );
 
         return contacto;
+    }
+
+    public void CargarDatosentre(List<Contacto> contactos){
+
+        contactos.clear();
+
+        Database db= new Database(context);
+
+        SQLiteDatabase database = db.getReadableDatabase();
+
+        Cursor cur = database.rawQuery("SELECT * FROM "+ Constants.TABLE_CONTACTO,null);
+
+        if( cur.moveToFirst()){
+
+            /*cur != null*/
+
+            do{
+
+                contactos.add(new Contacto(         cur.getInt(0),cur.getString(1),
+                        cur.getString(2),cur.getInt(3),
+                        cur.getInt(4),cur.getInt(5)
+                ));
+            } while(cur.moveToNext());
+
+
+        }
+
     }
 
     }

@@ -50,7 +50,7 @@
             android:background="@drawable/botones"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="Selecionar"
+            android:text="Seleccionar"
             android:textColor="@color/sombra"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
