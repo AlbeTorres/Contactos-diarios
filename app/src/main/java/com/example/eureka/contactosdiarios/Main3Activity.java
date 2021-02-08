@@ -78,10 +78,6 @@ public class Main3Activity extends AppCompatActivity {
 
             recyclerView.setAdapter(adapter);
 
-
-            Toast.makeText(this,dia+" "+ mes+" " + " "+año+ "  ESO "+ diapi+" "+mespi+" "+añopi,Toast.LENGTH_LONG).show();
-
-
             getSupportFragmentManager()
                     .beginTransaction()
                     .hide(fragment)

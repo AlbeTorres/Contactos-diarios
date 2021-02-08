@@ -40,7 +40,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main5Activity"></activity>
+        <activity android:name=".Main5Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAINACTIVITY5ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Main6Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAINACTIVITY6ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Canvas;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     int mes;
     int año;
     Acceso acceso;
+    Contacto contactop;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
             acceso.CargarDatos(dia,mes,año,contactoList);
 
-            Toast.makeText(MainActivity.this,""+ result,Toast.LENGTH_LONG).show();
+
 
             recyclerView.setAdapter(adapter);
 
@@ -72,7 +77,26 @@ public class MainActivity extends AppCompatActivity {
                     .hide(fragment)
                     .commit();
 
-        } }
+        }
+
+        if(resultCode==52){
+
+            nombre= data.getStringExtra("nombre");
+            telefono= data.getStringExtra("tele");
+
+            Contacto contacto= new Contacto(contactop.getId(),nombre,telefono,dia,mes,año);
+
+            long result =acceso.ModificarDatos(contacto,contactop.getId());
+
+            acceso.CargarDatos(dia,mes,año,contactoList);
+
+
+            recyclerView.setAdapter(adapter);
+
+        }
+
+
+    }
 
 
     @Override
@@ -141,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -157,14 +182,43 @@ public class MainActivity extends AppCompatActivity {
                     contactoList.remove(position);
                     adapter.notifyItemRemoved(position);
 
+                    if (contactoList.isEmpty()){
+
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frame,fragment)
+                                .show(fragment)
+                                .commit();
+                    }
+
                     break;
                 case ItemTouchHelper.RIGHT:
+                    contactop= contactoList.get(position);
                     Intent intent3 = new Intent(MainActivity.this,Main5Activity.class);
+                    intent3.putExtra("Nom",contactop.getNombre());
+                    intent3.putExtra("Tel",contactop.getTelefono());
+                    recyclerView.setAdapter(adapter);
                     startActivityForResult(intent3,inputcode2);
                     break;
 
             }
 
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+           new RecyclerViewSwipeDecorator.Builder(MainActivity.this,c,recyclerView,viewHolder,dX,dY,actionState,isCurrentlyActive)
+                   .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.red))
+                   .addSwipeLeftActionIcon(R.mipmap.ic_deleted)
+                   .addSwipeRightBackgroundColor(ContextCompat.getColor(MainActivity.this,R.color.verde))
+                   .addSwipeRightActionIcon(R.mipmap.ic_edit)
+                   .create()
+                   .decorate();
+
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
 
@@ -181,6 +235,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.sobre_nosotros:
+
+                Intent acerca = new Intent(MainActivity.this,Main6Activity.class);
+                startActivity(acerca);
+
 
             default:
                 return super.onOptionsItemSelected(item);

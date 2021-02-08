@@ -7,5 +7,7 @@
     <color name="grisoscuro">#dad9d9</color>
     <color name="sombra">#4e4c4d</color>
     <color name="blanco">#f9f9f9</color>
+    <color name="red">#b64141</color>
+    <color name="verde">#6fb64f</color>
 
 </resources>

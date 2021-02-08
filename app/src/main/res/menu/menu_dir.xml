@@ -6,7 +6,7 @@
 
     <item android:id="@+id/sobre_nosotros"
         android:title="Modificar"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_action_name"
         app:showAsAction="always">
     </item>
 
