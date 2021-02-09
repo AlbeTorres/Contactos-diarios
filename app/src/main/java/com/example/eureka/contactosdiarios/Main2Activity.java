@@ -47,6 +47,7 @@ public class Main2Activity extends AppCompatActivity {
         Toolbar toolbar2 = (Toolbar) findViewById(R.id.toolbar2);
         toolbar2.setTitle("Añadir contacto");
         setSupportActionBar(toolbar2);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         acceso = new Acceso(this);
 

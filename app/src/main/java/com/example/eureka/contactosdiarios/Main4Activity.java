@@ -26,6 +26,7 @@ public class Main4Activity extends AppCompatActivity {
         Toolbar toolbar4 = (Toolbar) findViewById(R.id.toolbar4);
         toolbar4.setTitle("Selecciona una fecha");
         setSupportActionBar(toolbar4);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         datePicker = (DatePicker) findViewById(R.id.datePicker);
 

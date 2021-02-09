@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     Acceso acceso;
     Contacto contactop;
 
+    private static final int intervalo = 2000;
+    private long tiempoprimerclic;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -144,9 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
         intent = new Intent(this,Main2Activity.class);
         intent2 = new Intent(this,Main3Activity.class);
-        intent2.putExtra("dia",dia);
-        intent2.putExtra("mes",mes);
-        intent2.putExtra("año",año);
 
 
         contacto.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +164,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (tiempoprimerclic+intervalo>System.currentTimeMillis()){ super.onBackPressed();
+        return;
+                }else {
+            Toast.makeText(this,"Vuelve a presionar para salir",Toast.LENGTH_SHORT).show();
+        }
 
+        tiempoprimerclic= System.currentTimeMillis();
+
+    }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override

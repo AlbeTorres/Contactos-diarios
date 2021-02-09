@@ -41,6 +41,7 @@ public class Main5Activity extends AppCompatActivity {
         Toolbar toolbar5 = (Toolbar) findViewById(R.id.toolbar5);
         toolbar5.setTitle("Modificar contacto");
         setSupportActionBar(toolbar5);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         acceso = new Acceso(this);
 

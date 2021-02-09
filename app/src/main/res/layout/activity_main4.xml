@@ -8,6 +8,7 @@
 
 
     <android.support.v7.widget.Toolbar
+        android:elevation="4dp"
         android:id="@+id/toolbar4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

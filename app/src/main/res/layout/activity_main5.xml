@@ -137,6 +137,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar5"
+        android:elevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -173,16 +174,16 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="152dp"
-        android:layout_height="146dp"
-        android:layout_marginLeft="16dp"
-        android:src="@drawable/baseball_86326"
+        android:layout_width="191dp"
+        android:layout_height="189dp"
+        android:layout_marginLeft="11dp"
+        android:src="@drawable/modificar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/añafra"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-        app:layout_constraintVertical_bias="0.61" />
+        app:layout_constraintVertical_bias="0.55" />
 
 
 

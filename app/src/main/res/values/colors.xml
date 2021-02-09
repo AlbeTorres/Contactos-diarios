@@ -9,5 +9,8 @@
     <color name="blanco">#f9f9f9</color>
     <color name="red">#b64141</color>
     <color name="verde">#6fb64f</color>
+    <color name="azul">#88D5DD</color>
+    <color name="negro">#181818</color>
+
 
 </resources>

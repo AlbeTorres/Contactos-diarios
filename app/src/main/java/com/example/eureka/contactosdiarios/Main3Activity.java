@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -65,6 +66,7 @@ public class Main3Activity extends AppCompatActivity {
                         (( auxdia < dia && auxdia < diapi )&&( auxmes<= mes && auxmes > mespi )&&( auxaño<= año && auxaño >= añopi ))||
                         (( auxdia > dia && auxdia >= diapi )&&( auxmes< mes && auxmes >= mespi )&&( auxaño<= año && auxaño >= añopi ))||
                         (( auxdia == dia  )&&( auxmes== mes && auxmes >= mespi )&&( auxaño<= año && auxaño >= añopi ))||
+                        (( auxaño<= año && auxaño > añopi ))||
                         (( auxdia >= dia && auxdia >= diapi )&&( auxmes>= mes && auxmes >= mespi )&&( auxaño< año && auxaño >= añopi ))
 
                         ){
@@ -94,6 +96,7 @@ public class Main3Activity extends AppCompatActivity {
         toolbar3 = (Toolbar) findViewById(R.id.toolbar3);
         toolbar3.setTitle("Últimos contactos");
         setSupportActionBar(toolbar3);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sele = (Button)findViewById(R.id.sele);
         intent3 = new Intent(this,Main4Activity.class);
@@ -114,10 +117,11 @@ public class Main3Activity extends AppCompatActivity {
         adapter = new ContactoAdapter(this,contactoList);
 
 
-        Bundle bundle = getIntent().getExtras();
-         dia = bundle.getInt("dia");
-         mes= bundle.getInt("mes");
-         año= bundle.getInt("año");
+        Time today = new Time(Time.getCurrentTimezone());
+        today.setToNow();
+        dia = today.monthDay;
+        mes = (today.month) +1;
+        año = today.year;
 
 
 
